@@ -10,3 +10,8 @@ for i in range(gameObject.game_vars["board_height"]):
     for i in range(gameObject.game_vars["board_width"]):
         line.append(0)
     gameObject.game_vars["field"].append(line)
+
+
+gameObject.game_vars["field"][0][0] = 1
+
+gameObject.game_vars["field"][3][4] = 1

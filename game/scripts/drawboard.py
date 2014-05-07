@@ -20,3 +20,24 @@ for line in gameObject.game_vars["field"]:
             
     posX = padding_left
     posY += gameObject.game_vars["cell_size"][1]
+
+
+stone_in_field = None
+lnumber = 0
+for line in gameObject.game_vars["field"]:
+    stone_in_field = None
+    fnumber = 0
+    for row in line:
+        if row != 0:
+            stone_in_field = row
+
+            if len(gameObject.game_vars["field"][lnumber]) > fnumber + 1:
+                gameObject.game_vars["field"][lnumber][fnumber] = 0
+                gameObject.game_vars["field"][lnumber][fnumber + 1] = stone_in_field
+                stone_in_field = None
+                pygame.time.delay(100)
+                gameObject.refreshScene()
+        fnumber += 1
+
+    lnumber += 1
+        
