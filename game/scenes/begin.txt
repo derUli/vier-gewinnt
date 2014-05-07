@@ -1,1 +1,1 @@
-image background-menu.jpg
+goto select-color.txt
