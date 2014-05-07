@@ -1,1 +1,2 @@
+pyexec init-field.py
 goto select-color.txt
