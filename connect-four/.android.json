@@ -1,0 +1,1 @@
+{"orientation": "landscape", "include_pil": false, "expansion": false, "icon_name": "Connect Four", "include_sqlite": false, "permissions": ["VIBRATE", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"], "layout": "external", "name": "Connect Four", "package": "com.uligames.games.connectfour", "source": false, "version": "1.0", "numeric_version": "100"}

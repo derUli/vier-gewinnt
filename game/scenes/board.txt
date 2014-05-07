@@ -1,4 +1,0 @@
-unset save scene
-image board.jpg
-
-pyexec drawboard.py
