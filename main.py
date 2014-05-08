@@ -29,8 +29,10 @@ YMARGIN = int((WINDOWHEIGHT - BOARDHEIGHT * SPACESIZE) / 2)
 BRIGHTBLUE = (0, 50, 255)
 WHITE = (255, 255, 255)
 
-BGCOLOR = BRIGHTBLUE
+BGCOLOR = (248, 248, 248)
 TEXTCOLOR = WHITE
+
+BACKGROUNDIMAGE = None
 
 try:
     import android
@@ -56,7 +58,7 @@ def main():
     global FPSCLOCK, DISPLAYSURF, REDPILERECT, BLACKPILERECT, REDTOKENIMG
     global BLACKTOKENIMG, BOARDIMG, ARROWIMG, ARROWRECT, HUMANWINNERIMG
     global COMPUTERWINNERIMG, WINNERRECT, TIEWINNERIMG
-
+    global BACKGROUNDIMAGE
     pygame.init()
     FPSCLOCK = pygame.time.Clock()
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
@@ -65,6 +67,7 @@ def main():
     REDPILERECT = pygame.Rect(int(SPACESIZE / 2), WINDOWHEIGHT - int(3 * SPACESIZE / 2), SPACESIZE, SPACESIZE)
     BLACKPILERECT = pygame.Rect(WINDOWWIDTH - int(3 * SPACESIZE / 2), WINDOWHEIGHT - int(3 * SPACESIZE / 2), SPACESIZE, SPACESIZE)
     REDTOKENIMG = pygame.image.load('4row_red.png')
+    BACKGROUNDIMAGE = pygame.image.load("background.jpg")
     REDTOKENIMG = pygame.transform.smoothscale(REDTOKENIMG, (SPACESIZE, SPACESIZE))
     BLACKTOKENIMG = pygame.image.load('4row_black.png')
     BLACKTOKENIMG = pygame.transform.smoothscale(BLACKTOKENIMG, (SPACESIZE, SPACESIZE))
@@ -161,7 +164,9 @@ def makeMove(board, player, column):
 
 
 def drawBoard(board, extraToken=None):
+    global BACKGROUNDIMAGE
     DISPLAYSURF.fill(BGCOLOR)
+    DISPLAYSURF.blit(BACKGROUNDIMAGE, (0,0))
 
     # draw tokens
     spaceRect = pygame.Rect(0, 0, SPACESIZE, SPACESIZE)
