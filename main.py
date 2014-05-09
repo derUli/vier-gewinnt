@@ -219,9 +219,9 @@ def getHumanMove(board, isFirstMove):
                 # update the position of the red token being dragged
                 tokenx, tokeny = event.pos
             elif event.type == MOUSEBUTTONUP and draggingToken:
-		if tokenx == None or tokeny == None:
-			draggingToken = False
-			return
+                if tokenx == None or tokeny == None:
+                   draggingToken = False
+                   return
                 # let go of the token being dragged
                 if tokeny < YMARGIN and tokenx > XMARGIN and tokenx < WINDOWWIDTH - XMARGIN:
                     # let go at the top of the screen.
