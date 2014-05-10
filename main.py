@@ -19,7 +19,7 @@ DIFFICULTY = 2 # how many moves to look ahead. (>2 is usually too much)
 
 SPACESIZE = 64 # size of the tokens and individual board spaces in pixels
 
-FPS = 30 # frames per second to update the screen
+FPS = 60 # frames per second to update the screen
 WINDOWWIDTH = 800 # width of the program's window, in pixels
 WINDOWHEIGHT = 480 # height in pixels
 
@@ -66,17 +66,17 @@ def main():
 
     REDPILERECT = pygame.Rect(int(SPACESIZE / 2), WINDOWHEIGHT - int(3 * SPACESIZE / 2), SPACESIZE, SPACESIZE)
     BLACKPILERECT = pygame.Rect(WINDOWWIDTH - int(3 * SPACESIZE / 2), WINDOWHEIGHT - int(3 * SPACESIZE / 2), SPACESIZE, SPACESIZE)
-    REDTOKENIMG = pygame.image.load('4row_red.png')
-    BACKGROUNDIMAGE = pygame.image.load("background.jpg")
+    REDTOKENIMG = pygame.image.load('4row_red.png').convert_alpha()
+    BACKGROUNDIMAGE = pygame.image.load("background.jpg").convert()
     REDTOKENIMG = pygame.transform.smoothscale(REDTOKENIMG, (SPACESIZE, SPACESIZE))
-    BLACKTOKENIMG = pygame.image.load('4row_black.png')
+    BLACKTOKENIMG = pygame.image.load('4row_black.png').convert_alpha()
     BLACKTOKENIMG = pygame.transform.smoothscale(BLACKTOKENIMG, (SPACESIZE, SPACESIZE))
-    BOARDIMG = pygame.image.load('4row_board.png')
+    BOARDIMG = pygame.image.load('4row_board.png').convert_alpha()
     BOARDIMG = pygame.transform.smoothscale(BOARDIMG, (SPACESIZE, SPACESIZE))
 
-    HUMANWINNERIMG = pygame.image.load('4row_humanwinner.png')
-    COMPUTERWINNERIMG = pygame.image.load('4row_computerwinner.png')
-    TIEWINNERIMG = pygame.image.load('4row_tie.png')
+    HUMANWINNERIMG = pygame.image.load('4row_humanwinner.png').convert_alpha()
+    COMPUTERWINNERIMG = pygame.image.load('4row_computerwinner.png').convert_alpha()
+    TIEWINNERIMG = pygame.image.load('4row_tie.png').convert_alpha()
     WINNERRECT = HUMANWINNERIMG.get_rect()
     WINNERRECT.center = (int(WINDOWWIDTH / 2), int(WINDOWHEIGHT / 2))
 
@@ -93,6 +93,7 @@ def main():
 
 
 def runGame(isFirstGame):
+    global FPS
     if isFirstGame:
         # Let the computer go first on the first game, so the player
         # can see how the tokens are dragged from the token piles.
@@ -148,7 +149,7 @@ def runGame(isFirstGame):
         drawBoard(mainBoard)
         DISPLAYSURF.blit(winnerImg, WINNERRECT)
         pygame.display.update()
-        FPSCLOCK.tick()
+        FPSCLOCK.tick(FPS)
         for event in pygame.event.get(): # event handling loop
             if event.type == QUIT or (event.type == KEYUP and event.key == K_ESCAPE):
                 pygame.quit()
@@ -206,6 +207,7 @@ def getNewBoard():
 def getHumanMove(board, isFirstMove):
     draggingToken = False
     tokenx, tokeny = None, None
+    global FPS
     while True:
         for event in pygame.event.get(): # event handling loop
             if event.type == QUIT:
@@ -244,10 +246,11 @@ def getHumanMove(board, isFirstMove):
             DISPLAYSURF.blit(ARROWIMG, ARROWRECT)
 
         pygame.display.update()
-        FPSCLOCK.tick()
+        FPSCLOCK.tick(FPS)
 
 
 def animateDroppingToken(board, column, color):
+    global FPS
     x = XMARGIN + column * SPACESIZE
     y = YMARGIN - SPACESIZE
     dropSpeed = 1.0
@@ -262,7 +265,7 @@ def animateDroppingToken(board, column, color):
             return
         drawBoard(board, {'x':x, 'y':y, 'color':color})
         pygame.display.update()
-        FPSCLOCK.tick()
+        FPSCLOCK.tick(FPS)
 
 
 def playSound(soundfile, blocking = True):
@@ -291,6 +294,7 @@ This will load the whole sound into memory before playback
         print("Playback Finished.")
 
 def animateComputerMoving(board, column):
+    global FPS
     x = BLACKPILERECT.left
     y = BLACKPILERECT.top
     speed = 1.0
@@ -300,7 +304,7 @@ def animateComputerMoving(board, column):
         speed += 0.5
         drawBoard(board, {'x':x, 'y':y, 'color':BLACK})
         pygame.display.update()
-        FPSCLOCK.tick()
+        FPSCLOCK.tick(FPS)
     # moving the black tile over
     y = YMARGIN - SPACESIZE
     speed = 1.0
@@ -309,7 +313,7 @@ def animateComputerMoving(board, column):
         speed += 0.5
         drawBoard(board, {'x':x, 'y':y, 'color':BLACK})
         pygame.display.update()
-        FPSCLOCK.tick()
+        FPSCLOCK.tick(FPS)
     # dropping the black tile
     animateDroppingToken(board, column, BLACK)
     
